@@ -1,0 +1,22 @@
+{
+  "name": "ai-story-weaver-for-kids",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@google/genai": "latest",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-pageflip": "^2.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "typescript": "~5.7.2",
+    "vite": "^6.2.0"
+  }
+}
