@@ -1,3 +1,8 @@
+export type LocalizedString = {
+    en: string;
+    ar: string;
+};
+
 export interface StoryTheme {
   id: string;
   title: string;
@@ -7,7 +12,7 @@ export interface StoryTheme {
 }
 
 export interface ArtStyle {
-  id: string;
+  id:string;
   name: string;
   image: string;
   prompt: string;
@@ -15,27 +20,27 @@ export interface ArtStyle {
 
 export interface StoryPage {
   pageNumber: number;
-  text: string;
+  text: LocalizedString;
   imagePrompt: string;
   imageUrl?: string;
   imageIsGenerating?: boolean;
 }
 
 export interface Story {
-  title: string;
+  title: LocalizedString;
   pages: StoryPage[];
+}
+
+export interface FullLibraryStory extends Story {
+  coverImage: string;
+  description: LocalizedString;
 }
 
 export type Language = 'en' | 'ar';
 
-export type Page = 'home' | 'create' | 'stories';
+export type Page = 'home' | 'create' | 'stories' | 'pricing';
 
 export interface GenerationProgress {
     message: string;
     percentage: number;
-}
-
-export interface LibraryStoryDefinition {
-  id: string;
-  image: string;
 }
