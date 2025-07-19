@@ -1,35 +1,25 @@
-
-
 import React, { useState } from 'react';
-import { Language, FullLibraryStory } from '../types';
+import { Language, FullLibraryStory, StoryCategory } from '../types';
 import { FULL_LIBRARY_STORIES } from '../constants';
 import StoryBookViewer from './StoryBookViewer';
-
-const StoryCard: React.FC<{ story: FullLibraryStory; onClick: () => void; language: Language; }> = ({ story, onClick, language }) => {
-    const title = story.title[language];
-    return (
-        <div 
-            onClick={onClick}
-            className="group relative overflow-hidden rounded-xl shadow-lg aspect-[3/4] transform transition-transform duration-300 hover:-translate-y-2 cursor-pointer"
-            role="button"
-            tabIndex={0}
-            aria-label={`Read story: ${title}`}
-            onKeyPress={(e) => { if (e.key === 'Enter') onClick() }}
-        >
-            <img src={story.coverImage} alt={title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-            <h3 className={`absolute bottom-0 p-4 text-white font-bold text-lg ${language === 'ar' ? 'right-0 left-auto text-right font-cairo' : 'left-0'}`}>{title}</h3>
-        </div>
-    );
-};
-
+import StoryCard from './StoryCard';
 
 interface OurStoriesPageProps {
     language: Language;
 }
 
+const STORY_CATEGORIES: { id: StoryCategory | 'all', name: { en: string; ar: string } }[] = [
+    { id: 'all', name: { en: 'All Stories', ar: 'كل القصص' } },
+    { id: 'adventure', name: { en: 'Adventure', ar: 'مغامرة' } },
+    { id: 'fantasy', name: { en: 'Fantasy', ar: 'خيال' } },
+    { id: 'bedtime', name: { en: 'Bedtime', ar: 'وقت النوم' } },
+    { id: 'educational', name: { en: 'Educational', ar: 'تعليمية' } },
+];
+
+
 export default function OurStoriesPage({ language }: OurStoriesPageProps) {
     const [selectedStory, setSelectedStory] = useState<FullLibraryStory | null>(null);
+    const [activeCategory, setActiveCategory] = useState<StoryCategory | 'all'>('all');
 
     const text = language === 'en' 
         ? { title: "Our Story Library", description: "Explore a universe of magical stories created with AI. Click a book to read!" }
@@ -44,14 +34,35 @@ export default function OurStoriesPage({ language }: OurStoriesPageProps) {
             />
         );
     }
+    
+    const filteredStories = activeCategory === 'all'
+        ? FULL_LIBRARY_STORIES
+        : FULL_LIBRARY_STORIES.filter(story => story.category === activeCategory);
 
     return (
-        <div className="container mx-auto text-center py-12 sm:py-20 px-4">
+        <div className="container mx-auto text-center py-12 sm:py-20 px-4 md:px-8">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">{text.title}</h1>
             <p className="text-lg text-slate-400 max-w-2xl mx-auto">{text.description}</p>
+            
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-4 my-8" role="toolbar" aria-label="Story Categories">
+                {STORY_CATEGORIES.map(category => (
+                    <button
+                        key={category.id}
+                        onClick={() => setActiveCategory(category.id)}
+                        className={`px-4 py-2 text-sm sm:text-base font-semibold rounded-full transition-colors duration-200 ${
+                            activeCategory === category.id
+                                ? 'bg-indigo-500 text-white shadow-lg'
+                                : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                        }`}
+                        aria-pressed={activeCategory === category.id}
+                    >
+                        {category.name[language]}
+                    </button>
+                ))}
+            </div>
 
-            <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-8">
-                {FULL_LIBRARY_STORIES.map((story, index) => (
+            <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 sm:gap-8 md:gap-10">
+                {filteredStories.map((story, index) => (
                     <StoryCard key={index} story={story} onClick={() => setSelectedStory(story)} language={language} />
                 ))}
             </div>

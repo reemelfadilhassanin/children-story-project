@@ -31,9 +31,12 @@ export interface Story {
   pages: StoryPage[];
 }
 
+export type StoryCategory = 'adventure' | 'bedtime' | 'educational' | 'fantasy';
+
 export interface FullLibraryStory extends Story {
   coverImage: string;
   description: LocalizedString;
+  category: StoryCategory;
 }
 
 export type Language = 'en' | 'ar';

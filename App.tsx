@@ -43,7 +43,7 @@ export default function App() {
     };
 
     return (
-        <div dir={language === 'ar' ? 'rtl' : 'ltr'} className={`${language === 'ar' ? 'font-cairo' : 'font-nunito'} bg-slate-900 min-h-screen text-slate-300`}>
+        <div dir={language === 'ar' ? 'rtl' : 'ltr'} className={`${language === 'ar' ? 'font-cairo' : ''} bg-slate-900 min-h-screen text-slate-300`}>
             <Header setPage={setPage} language={language} setLanguage={setLanguage} />
             <main>
                 {renderPage()}
