@@ -1,5 +1,4 @@
 
-
 import React, { useState, useEffect } from 'react';
 import { Page, Language } from './types';
 import Header from './components/Header';
@@ -42,8 +41,10 @@ export default function App() {
         }
     };
 
+    const appClassName = `bg-slate-900 min-h-screen text-slate-300 ${language === 'ar' ? 'font-cairo' : ''}`;
+
     return (
-        <div dir={language === 'ar' ? 'rtl' : 'ltr'} className={`${language === 'ar' ? 'font-cairo' : ''} bg-slate-900 min-h-screen text-slate-300`}>
+        <div dir={language === 'ar' ? 'rtl' : 'ltr'} className={appClassName}>
             <Header setPage={setPage} language={language} setLanguage={setLanguage} />
             <main>
                 {renderPage()}
