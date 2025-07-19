@@ -171,7 +171,7 @@
 
 import { Story, StoryTheme, Language, StoryPage } from '../types';
 
-const API_BASE_URL = 'http://localhost:3001';
+const API_BASE_URL = 'https://children-story-project.onrender.com';
 
 export async function describeHero(photo: File): Promise<string> {
     const formData = new FormData();
